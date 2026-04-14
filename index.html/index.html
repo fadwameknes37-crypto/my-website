@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="accueil_titre">Golde Path Car - Accueil</title>
+    <meta name="description" content="Golde Path Car : location de voitures au Maroc. Large gamme, prix compétitifs, assurance incluse, disponibilité 24/7. Réservez dès maintenant !">
+    <meta name="keywords" content="location voiture Maroc, location véhicule Salé, location voiture pas cher, assurance auto, wifi voiture, siège bébé">
+    <meta name="author" content="Golde Path Car">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: black;
+            --text-color: white;
+            --secondary-bg: #111;
+            --card-bg: #1a1a1a;
+            --border-color: #333;
+            --overlay-dark: rgba(0,0,0,0.9);
+            --overlay-light: rgba(0,0,0,0.7);
+            --footer-bg: #111;
+        }
+        body.theme-light {
+            --bg-color: white;
+            --text-color: black;
+            --secondary-bg: #f5f5f5;
+            --card-bg: #f0f0f0;
+            --border-color: #ddd;
+            --overlay-dark: rgba(255,255,255,0.9);
+            --overlay-light: rgba(255,255,255,0.7);
+            --footer-bg: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 30px;
+            background-color: var(--secondary-bg);
+            border-bottom: 1px solid #ff8c00; 
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+            flex-shrink: 0;
+        }
+        
+        .logo-img {
+            width: auto;
+            border-radius: 3px; 
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-container img:first-child {
+            height: 30px; 
+        }
+        
+        .logo-container img:last-child {
+            height: 75px; 
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px; 
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px; 
+            transition: 0.2s;
+            position: relative;
+            padding: 3px 0; 
+            white-space: nowrap;
+            font-weight: 500;
+            letter-spacing: 0.3px; 
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ff8c00;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px; 
+            background: #ff8c00;
+            transition: width 0.2s;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+       
+        .language-selector {
+            background: transparent;
+            color: #ff8c00;
+            border: 1px solid #ff8c00;
+            padding: 4px 8px; 
+            border-radius: 30px;
+            font-size: 12px; 
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s;
+            margin-left: 2px;
+            min-width: 70px; 
+        }
+        
+        .language-selector:hover {
+            background: #ff8c00;
+            color: black;
+        }
+        
+        .language-selector option {
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            font-size: 12px;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            gap: 5px; 
+            margin-left: 2px;
+        }
+        
+        .theme-toggle i {
+            color: #ff8c00;
+            font-size: 14px; 
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 2px; 
+        }
+        
+        .theme-toggle i:hover {
+            transform: scale(1.2);
+        }
+
+    
+        .hero {
+            min-height: 90vh;
+            background: linear-gradient(135deg, var(--overlay-dark) 0%, var(--overlay-light) 100%), url('https://images.unsplash.com/photo-1555215695-3004980ad54e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,140,0,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1.2s ease;
+        }
+        .hero h1 {
+            font-size: 56px;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+        .hero h1 span {
+            color: #ff8c00;
+        }
+        .hero h2 {
+            font-size: 28px;
+            color: #ff8c00;
+            margin-bottom: 15px;
+            font-weight: 300;
+        }
+        .hero p {
+            font-size: 20px;
+            max-width: 800px;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .btn {
+            background-color: #ff8c00;
+            color: black;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .btn i { font-size: 20px; }
+        .btn:hover {
+            background-color: #e07b00;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #ff8c00;
+            color: #ff8c00;
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+        }
+        .btn-outline:hover {
+            background-color: #ff8c00;
+            color: black;
+            transform: translateY(-3px);
+        }
+
+        .president {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--secondary-bg) 0%, var(--card-bg) 100%);
+            text-align: center;
+        }
+        .president h2 {
+            font-size: 40px;
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+        .president h3 {
+            font-size: 24px;
+            color: #ff8c00;
+            margin-bottom: 40px;
+            font-weight: 400;
+            border-bottom: 2px solid #ff8c00;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .president .contact-info-pres {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            max-width: 1100px;
+            margin: 0 auto 30px auto;
+            background: linear-gradient(135deg, var(--card-bg) 0%, var(--secondary-bg) 100%);
+            padding: 50px 40px;
+            border-radius: 30px;
+            border: 2px solid #ff8c00;
+            box-shadow: 0 10px 30px rgba(255,140,0,0.2);
+            animation: fadeInUp 1s ease;
+        }
+        .president .info-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: var(--text-color);
+            font-size: 18px;
+            padding: 15px 25px;
+            background: rgba(255,140,0,0.1);
+            border-radius: 15px;
+            transition: 0.3s;
+            border: 1px solid transparent;
+        }
+        .president .info-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            border-color: #ff8c00;
+            background: rgba(255,140,0,0.2);
+        }
+        .president .info-item i {
+            font-size: 28px;
+            color: #ff8c00;
+            width: 40px;
+            animation: float 3s infinite;
+        }
+
+       
+        .footer {
+            background: var(--footer-bg);
+            color: var(--text-color);
+            padding: 40px 20px 20px; 
+            border-top: 1px solid #ff8c00; 
+            margin-top: 50px;
+            transition: background-color 0.3s;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        .footer-col h4 {
+            color: #ff8c00;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .footer-col p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .footer-col i {
+            color: #ff8c00;
+            margin-right: 8px;
+            width: 18px;
+        }
+        .social-links a {
+            color: var(--text-color);
+            margin-right: 12px;
+            font-size: 20px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .social-links a:hover {
+            color: #ff8c00;
+            transform: translateY(-3px);
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 13px;
+        }
+
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--secondary-bg); }
+        ::-webkit-scrollbar-thumb { background: #ff8c00; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e07b00; }
+
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 8px 20px;
+            }
+            
+            .logo-container img:last-child {
+                height: 60px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar { 
+                flex-direction: column; 
+                gap: 10px; 
+                padding: 10px; 
+            }
+            
+            .logo-container { 
+                gap: 5px; 
+            }
+            
+            .logo-container img:first-child {
+                height: 30px;
+            }
+            
+            .logo-container img:last-child {
+                height: 50px;
+            }
+            
+            .nav-links {
+                gap: 8px;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .nav-links a {
+                font-size: 13px;
+                padding: 3px 5px;
+            }
+            
+            .language-selector {
+                padding: 3px 6px;
+                font-size: 11px;
+                min-width: 65px;
+            }
+            
+            .theme-toggle {
+                gap: 4px;
+            }
+            
+            .theme-toggle i {
+                font-size: 13px;
+            }
+            
+            .hero {
+                min-height: 70vh;
+                padding: 15px;
+            }
+            .hero h1 { 
+                font-size: 28px; 
+            }
+            .hero h2 { 
+                font-size: 20px; 
+                margin-bottom: 10px;
+            }
+            .hero p { 
+                font-size: 16px; 
+                margin-bottom: 20px;
+            }
+            .btn {
+                padding: 12px 25px;
+                font-size: 16px;
+            }
+            .president {
+                padding: 40px 15px;
+            }
+            .president h2 {
+                font-size: 32px;
+            }
+            .president h3 {
+                font-size: 20px;
+                margin-bottom: 25px;
+            }
+            .president .contact-info-pres {
+                padding: 25px 15px;
+                gap: 15px;
+                margin-bottom: 20px;
+            }
+            .president .info-item {
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+                padding: 12px 15px;
+                font-size: 16px;
+                width: 100%;
+            }
+            .president .info-item i {
+                font-size: 24px;
+                width: auto;
+            }
+            .btn-outline {
+                padding: 8px 20px;
+                font-size: 14px;
+            }
+            .footer {
+                padding: 30px 15px 15px;
+                margin-top: 30px;
+            }
+            .footer-container {
+                gap: 15px;
+            }
+            .footer-col h4 {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            .footer-col p {
+                font-size: 13px;
+            }
+            .footer-bottom {
+                margin-top: 15px;
+                padding-top: 12px;
+                font-size: 12px;
+            }
+            .social-links a {
+                font-size: 18px;
+                margin-right: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="LOGO_.HTML-removebg-preview.png" alt="Logo principal" class="logo-img" onerror="this.style.display='none'">
+            <img src="LOGOISM.HTML.png" alt="Second logo" class="logo-img" onerror="this.style.display='none'">
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" data-i18n="accueil">Accueil</a>
+            <a href="Véhicules.HTML" data-i18n="vehicules">Véhicules</a>
+            <a href="Services.HTML" data-i18n="services">Services</a>
+            <a href="Contact.HTML" data-i18n="contact">Contact</a>
+            
+            <select class="language-selector" id="languageSelect">
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="tr">Türkçe</option>
+                <option value="zh">中文</option>
+                <option value="ko">한국어</option>
+            </select>
+            
+            <div class="theme-toggle">
+                <i class="fas fa-moon" id="themeNight" title="Mode nuit"></i>
+                <i class="fas fa-sun" id="themeDay" title="Mode jour"></i>
+            </div>
+        </div>
+    </div>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>GOLDE <span>PATH CAR</span></h1>
+            <h2 data-i18n="hero_titre">Location de voitures de luxe</h2>
+            <p data-i18n="hero_desc">Votre partenaire de confiance pour la location de véhicules au Maroc. Luxe, confort et liberté.</p>
+            <a href="Véhicules.HTML" class="btn" data-i18n="hero_btn"><i class="fas fa-car"></i> Découvrir nos offres</a>
+        </div>
+    </section>
+
+    <section class="president">
+        <h2 data-i18n="president_nom">Golde Path Car</h2>
+        <h3 data-i18n="president_titre">Votre partenaire de confiance</h3>
+        <div class="contact-info-pres">
+            <div class="info-item">
+                <i class="fas fa-phone-alt"></i> 
+                <p data-i18n="president_tel">0661661921 / 0661606607</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-envelope"></i> 
+                <p data-i18n="president_email">goldepathcar@gmail.com</p>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-map-marker-alt"></i> 
+                <p data-i18n="president_adresse">Avenue Moulay Rachid Mag N°8 Secteur Badr Laayayda Salé</p>
+            </div>
+        </div>
+        <a href="https://maps.app.goo.gl/9qz8ivH97GKsbZPE8" target="_blank" class="btn-outline" data-i18n="maps_lien">
+            <i class="fas fa-map-marked-alt"></i> Voir sur Google Maps
+        </a>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4 data-i18n="footer_horaires_titre">Horaires</h4>
+                <p data-i18n="footer_horaires_1"><i class="fas fa-clock"></i> Lun-Sam : 8h-20h</p>
+                <p data-i18n="footer_horaires_2"><i class="fas fa-clock"></i> Dim : 9h-18h</p>
+                <p data-i18n="footer_horaires_3"><i class="fas fa-clock"></i> Urgences 24/7</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_contact_titre">Contact</h4>
+                <p><i class="fas fa-phone-alt"></i> 0661661921 / 0661606607</p>
+                <p><i class="fas fa-envelope"></i> goldepathcar@gmail.com</p>
+                <p data-i18n="footer_adresse"><i class="fas fa-map-marker-alt"></i> Salé, Maroc</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_social_titre">Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="https://wa.me/212661606607" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/goldepathcar?igsh=a3h1aGl0bGIxbmZy" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@location2026salae?_r=1&_t=ZS-94NlkeELAZx" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61588065275877" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer_copyright">© 2016 GOLDE PATH CAR - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            fr: {
+                accueil_titre: "Golde Path Car - Accueil",
+                accueil: "Accueil",
+                vehicules: "Véhicules",
+                services: "Services",
+                contact: "Contact",
+                hero_titre: "Location de voitures de luxe",
+                hero_desc: "Votre partenaire de confiance pour la location de véhicules au Maroc. Luxe, confort et liberté.",
+                hero_btn: "Découvrir nos offres",
+                president_nom: "Golde Path Car",
+                president_titre: "Votre partenaire de confiance",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "Avenue Moulay Rachid Mag N°8 Secteur Badr Laayayda Salé",
+                maps_lien: "Voir sur Google Maps",
+                footer_horaires_titre: "Horaires",
+                footer_horaires_1: "Lun-Sam : 8h-20h",
+                footer_horaires_2: "Dim : 9h-18h",
+                footer_horaires_3: "Urgences 24/7",
+                footer_contact_titre: "Contact",
+                footer_adresse: "Salé, Maroc",
+                footer_social_titre: "Suivez-nous",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Tous droits réservés"
+            },
+            ar: {
+                accueil_titre: "جولدي باث كار - الرئيسية",
+                accueil: "الرئيسية",
+                vehicules: "المركبات",
+                services: "الخدمات",
+                contact: "اتصل بنا",
+                hero_titre: "تأجير سيارات فاخرة",
+                hero_desc: "شريكك الموثوق لتأجير السيارات في المغرب. الفخامة، الراحة والحرية.",
+                hero_btn: "اكتشف عروضنا",
+                president_nom: "جولدي باث كار",
+                president_titre: "شريكك الموثوق",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "شارع مولاي رشيد، المحل رقم 8، قطاع بدر، العيايدة، سلا",
+                maps_lien: "عرض على خرائط جوجل",
+                footer_horaires_titre: "ساعات العمل",
+                footer_horaires_1: "الاثنين - السبت: ٨ صباحاً - ٨ مساءً",
+                footer_horaires_2: "الأحد: ٩ صباحاً - ٦ مساءً",
+                footer_horaires_3: "الطوارئ 24/7",
+                footer_contact_titre: "الاتصال",
+                footer_adresse: "سلا، المغرب",
+                footer_social_titre: "تابعنا",
+                footer_copyright: "© 2016 جولدي باث كار - جميع الحقوق محفوظة"
+            },
+            en: {
+                accueil_titre: "Golde Path Car - Home",
+                accueil: "Home",
+                vehicules: "Vehicles",
+                services: "Services",
+                contact: "Contact",
+                hero_titre: "Luxury car rental",
+                hero_desc: "Your trusted partner for car rental in Morocco. Luxury, comfort and freedom.",
+                hero_btn: "Discover our offers",
+                president_nom: "Golde Path Car",
+                president_titre: "Your trusted partner",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "Avenue Moulay Rachid, Shop No. 8, Badr Sector, Laayayda, Salé",
+                maps_lien: "View on Google Maps",
+                footer_horaires_titre: "Opening hours",
+                footer_horaires_1: "Mon - Sat: 8am - 8pm",
+                footer_horaires_2: "Sunday: 9am - 6pm",
+                footer_horaires_3: "24/7 emergencies",
+                footer_contact_titre: "Contact",
+                footer_adresse: "Salé, Morocco",
+                footer_social_titre: "Follow us",
+                footer_copyright: "© 2016 GOLDE PATH CAR - All rights reserved"
+            },
+            es: {
+                accueil_titre: "Golde Path Car - Inicio",
+                accueil: "Inicio",
+                vehicules: "Vehículos",
+                services: "Servicios",
+                contact: "Contacto",
+                hero_titre: "Alquiler de coches de lujo",
+                hero_desc: "Su socio de confianza para el alquiler de vehículos en Marruecos. Lujo, confort y libertad.",
+                hero_btn: "Descubrir nuestras ofertas",
+                president_nom: "Golde Path Car",
+                president_titre: "Su socio de confianza",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "Avenida Moulay Rachid, Local N°8, Sector Badr, Laayayda, Salé",
+                maps_lien: "Ver en Google Maps",
+                footer_horaires_titre: "Horarios",
+                footer_horaires_1: "Lun - Sáb : 8h - 20h",
+                footer_horaires_2: "Domingo : 9h - 18h",
+                footer_horaires_3: "Emergencias 24/7",
+                footer_contact_titre: "Contacto",
+                footer_adresse: "Salé, Marruecos",
+                footer_social_titre: "Síguenos",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Todos los derechos reservados"
+            },
+            de: {
+                accueil_titre: "Golde Path Car - Startseite",
+                accueil: "Startseite",
+                vehicules: "Fahrzeuge",
+                services: "Dienstleistungen",
+                contact: "Kontakt",
+                hero_titre: "Luxusautovermietung",
+                hero_desc: "Ihr zuverlässiger Partner für Fahrzeugmiete in Marokko. Luxus, Komfort und Freiheit.",
+                hero_btn: "Entdecken Sie unsere Angebote",
+                president_nom: "Golde Path Car",
+                president_titre: "Ihr zuverlässiger Partner",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "Avenue Moulay Rachid, Geschäft Nr. 8, Sektor Badr, Laayayda, Salé",
+                maps_lien: "Auf Google Maps ansehen",
+                footer_horaires_titre: "Öffnungszeiten",
+                footer_horaires_1: "Mo - Sa: 8 - 20 Uhr",
+                footer_horaires_2: "Sonntag: 9 - 18 Uhr",
+                footer_horaires_3: "Notfälle 24/7",
+                footer_contact_titre: "Kontakt",
+                footer_adresse: "Salé, Marokko",
+                footer_social_titre: "Folgen Sie uns",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Alle Rechte vorbehalten"
+            },
+            tr: {
+                accueil_titre: "Golde Path Car - Ana Sayfa",
+                accueil: "Ana Sayfa",
+                vehicules: "Araçlar",
+                services: "Hizmetler",
+                contact: "İletişim",
+                hero_titre: "Lüks Araç Kiralama",
+                hero_desc: "Fas'ta araç kiralama konusunda güvenilir ortağınız. Lüks, konfor ve özgürlük.",
+                hero_btn: "Fırsatlarımızı Keşfedin",
+                president_nom: "Golde Path Car",
+                president_titre: "Güvenilir ortağınız",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "Moulay Rachid Caddesi, No:8 Dükkan, Badr Bölgesi, Laayayda, Salé",
+                maps_lien: "Google Maps'te Görüntüle",
+                footer_horaires_titre: "Çalışma Saatleri",
+                footer_horaires_1: "Pts - Cmt: 8:00 - 20:00",
+                footer_horaires_2: "Pazar: 9:00 - 18:00",
+                footer_horaires_3: "7/24 Acil Durumlar",
+                footer_contact_titre: "İletişim",
+                footer_adresse: "Salé, Fas",
+                footer_social_titre: "Bizi Takip Edin",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Tüm hakları saklıdır"
+            },
+            zh: {
+                accueil_titre: "Golde Path Car - 首页",
+                accueil: "首页",
+                vehicules: "车辆",
+                services: "服务",
+                contact: "联系我们",
+                hero_titre: "豪华汽车租赁",
+                hero_desc: "您在摩洛哥租车的可靠合作伙伴。奢华、舒适和自由。",
+                hero_btn: "发现我们的优惠",
+                president_nom: "Golde Path Car",
+                president_titre: "您的可靠合作伙伴",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "穆莱拉希德大道8号店铺，巴德尔区，拉亚达，塞拉",
+                maps_lien: "在谷歌地图上查看",
+                footer_horaires_titre: "营业时间",
+                footer_horaires_1: "周一至周六：8:00 - 20:00",
+                footer_horaires_2: "周日：9:00 - 18:00",
+                footer_horaires_3: "24/7 紧急情况",
+                footer_contact_titre: "联系方式",
+                footer_adresse: "塞拉, 摩洛哥",
+                footer_social_titre: "关注我们",
+                footer_copyright: "© 2016 GOLDE PATH CAR - 保留所有权利"
+            },
+            ko: {
+                accueil_titre: "Golde Path Car - 홈",
+                accueil: "홈",
+                vehicules: "차량",
+                services: "서비스",
+                contact: "연락처",
+                hero_titre: "럭셔리 자동차 렌탈",
+                hero_desc: "모로코에서 차량 렌탈을 위한 신뢰할 수 있는 파트너. 럭셔리, 편안함, 자유.",
+                hero_btn: "제품 살펴보기",
+                president_nom: "Golde Path Car",
+                president_titre: "신뢰할 수 있는 파트너",
+                president_tel: "0661661921 / 0661606607",
+                president_email: "goldepathcar@gmail.com",
+                president_adresse: "물라이 라시드 애비뉴, 매장 번호 8, 바드르 구역, 라아야다, 살레",
+                maps_lien: "Google 지도에서 보기",
+                footer_horaires_titre: "영업 시간",
+                footer_horaires_1: "월 - 토: 8:00 - 20:00",
+                footer_horaires_2: "일요일: 9:00 - 18:00",
+                footer_horaires_3: "24/7 긴급 상황",
+                footer_contact_titre: "연락처",
+                footer_adresse: "살레, 모로코",
+                footer_social_titre: "팔로우하기",
+                footer_copyright: "© 2016 GOLDE PATH CAR - 모든 권리 보유"
+            }
+        };
+
+        function changeLanguage(lang) {
+            if (!translations[lang]) return;
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    const icon = el.querySelector('i');
+                    if (icon) {
+                        el.innerHTML = icon.outerHTML + ' ' + translations[lang][key];
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+            document.documentElement.lang = lang;
+            localStorage.setItem('preferredLang', lang);
+        }
+
+        const savedLang = localStorage.getItem('preferredLang') || 'fr';
+        const selector = document.getElementById('languageSelect');
+        if (selector) {
+            selector.value = savedLang;
+            selector.addEventListener('change', (e) => {
+                changeLanguage(e.target.value);
+            });
+        }
+        changeLanguage(savedLang);
+
+        const body = document.body;
+        const themeNight = document.getElementById('themeNight');
+        const themeDay = document.getElementById('themeDay');
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('theme-light');
+        } else {
+            body.classList.remove('theme-light');
+        }
+
+        if (themeNight && themeDay) {
+            themeNight.addEventListener('click', () => {
+                body.classList.remove('theme-light');
+                localStorage.setItem('theme', 'dark');
+            });
+
+            themeDay.addEventListener('click', () => {
+                body.classList.add('theme-light');
+                localStorage.setItem('theme', 'light');
+            });
+        }
+    </script>
+</body>
+</html>
