@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title data-i18n="services_titre">Golde Path Car - Nos Services</title>
+    <meta name="description" content="Découvrez nos services de location de voitures : large gamme, prix compétitifs, assurance incluse, disponibilité 24/7 et options de confort comme Wi-Fi et siège bébé.">
+    <meta name="keywords" content="location voiture, services location, assurance auto, wifi voiture, siege bebe, location pas cher">
+    <meta name="author" content="Golde Path Car">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: black;
+            --text-color: white;
+            --secondary-bg: #111;
+            --card-bg: #1a1a1a;
+            --border-color: #333;
+            --overlay-dark: rgba(0,0,0,0.9);
+            --overlay-light: rgba(0,0,0,0.7);
+            --footer-bg: #111;
+            --gradient-dark: #0a0a0a;
+            --gradient-light: #1a1a1a;
+            --service-item-bg: linear-gradient(135deg, #1a1a1a 0%, #252525 100%);
+            --why-us-bg: #111;
+        }
+        body.theme-light {
+            --bg-color: white;
+            --text-color: black;
+            --secondary-bg: #f5f5f5;
+            --card-bg: #f0f0f0;
+            --border-color: #ddd;
+            --overlay-dark: rgba(255,255,255,0.9);
+            --overlay-light: rgba(255,255,255,0.7);
+            --footer-bg: #f5f5f5;
+            --gradient-dark: #e0e0e0;
+            --gradient-light: #f0f0f0;
+            --service-item-bg: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+            --why-us-bg: #f0f0f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 30px; 
+            background-color: var(--secondary-bg);
+            border-bottom: 1px solid #ff8c00; 
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: background-color 0.3s;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px; 
+            flex-shrink: 0;
+        }
+        
+        .logo-img {
+            width: auto;
+            border-radius: 3px; 
+            transition: transform 0.3s ease;
+        }
+        .logo-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .logo-container img:first-child {
+            height: 35px; 
+        }
+        
+        .logo-container img:last-child {
+            height: 70px; 
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px; 
+            align-items: center;
+            flex-wrap: nowrap;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 14px; 
+            transition: 0.2s;
+            position: relative;
+            padding: 3px 0; 
+            white-space: nowrap;
+            font-weight: 500;
+            letter-spacing: 0.3px; 
+        }
+        
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #ff8c00;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 1px; 
+            background: #ff8c00;
+            transition: width 0.2s;
+        }
+        
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .language-selector {
+            background: transparent;
+            color: #ff8c00;
+            border: 1px solid #ff8c00; 
+            padding: 4px 8px; 
+            border-radius: 30px;
+            font-size: 12px; 
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s;
+            margin-left: 2px;
+            min-width: 70px; 
+        }
+        
+        .language-selector:hover {
+            background: #ff8c00;
+            color: black;
+        }
+        
+        .language-selector option {
+            background: var(--secondary-bg);
+            color: var(--text-color);
+            font-size: 12px;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            gap: 5px; 
+            margin-left: 2px;
+        }
+        
+        .theme-toggle i {
+            color: #ff8c00;
+            font-size: 14px; 
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 2px; 
+        }
+        
+        .theme-toggle i:hover {
+            transform: scale(1.2);
+        }
+
+        .page-header {
+            text-align: center;
+            padding: 60px 20px 30px;
+            background: linear-gradient(135deg, var(--gradient-dark) 0%, var(--gradient-light) 100%);
+            animation: fadeInUp 1s ease;
+        }
+        .page-header h1 {
+            font-size: 48px;
+            color: var(--text-color);
+        }
+        .page-header h1 span {
+            color: #ff8c00;
+            border-bottom: 3px solid #ff8c00;
+            padding-bottom: 5px;
+        }
+        .page-header p {
+            font-size: 20px;
+            color: var(--text-color);
+            opacity: 0.8;
+            max-width: 700px;
+            margin: 20px auto;
+        }
+
+        .services-list {
+            padding: 50px;
+            background-color: var(--bg-color);
+        }
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            background: var(--service-item-bg);
+            padding: 40px 20px;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            transition: transform 0.4s, border-color 0.3s, box-shadow 0.3s;
+            animation: fadeInUp 1s ease;
+            animation-fill-mode: both;
+        }
+        .service-item:nth-child(1) { animation-delay: 0.1s; }
+        .service-item:nth-child(2) { animation-delay: 0.2s; }
+        .service-item:nth-child(3) { animation-delay: 0.3s; }
+        .service-item:nth-child(4) { animation-delay: 0.4s; }
+        .service-item:nth-child(5) { animation-delay: 0.5s; }
+        .service-item:nth-child(6) { animation-delay: 0.6s; }
+        .service-item:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: #ff8c00;
+            box-shadow: 0 20px 40px rgba(255,140,0,0.3);
+        }
+        .service-item i {
+            font-size: 60px;
+            color: #ff8c00;
+            margin-bottom: 20px;
+            animation: float 3s infinite;
+        }
+        .service-item h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #ff8c00;
+        }
+        .service-item p {
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid #ff8c00;
+            color: #ff8c00;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 15px;
+        }
+        .btn-outline:hover {
+            background-color: #ff8c00;
+            color: black;
+            transform: scale(1.05);
+        }
+
+        .why-us {
+            text-align: center;
+            padding: 70px 20px;
+            background-color: var(--why-us-bg);
+        }
+        .why-us h2 {
+            font-size: 40px;
+            color: #ff8c00;
+            margin-bottom: 20px;
+        }
+        .why-us p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: var(--text-color);
+            opacity: 0.8;
+            font-size: 18px;
+        }
+
+        .footer {
+            background: var(--footer-bg);
+            color: var(--text-color);
+            padding: 40px 20px 20px; 
+            border-top: 1px solid #ff8c00; 
+            margin-top: 50px;
+            transition: background-color 0.3s;
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto;
+            gap: 30px;
+        }
+        .footer-col h4 {
+            color: #ff8c00;
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+        .footer-col p {
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .footer-col i {
+            color: #ff8c00;
+            margin-right: 8px;
+            width: 18px;
+        }
+        .social-links a {
+            color: var(--text-color);
+            margin-right: 12px;
+            font-size: 20px;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .social-links a:hover {
+            color: #ff8c00;
+            transform: translateY(-5px) scale(1.1);
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+            opacity: 0.7;
+            font-size: 13px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--secondary-bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #ff8c00;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e07b00;
+        }
+
+        @media (max-width: 992px) {
+            .navbar {
+                padding: 8px 20px;
+            }
+            
+            .logo-container img:last-child {
+                height: 60px;
+            }
+            
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+            }
+            
+            .logo-container {
+                gap: 5px;
+            }
+            
+            .logo-container img:first-child {
+                height: 30px;
+            }
+            
+            .logo-container img:last-child {
+                height: 50px;
+            }
+            
+            .nav-links {
+                gap: 8px;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .nav-links a {
+                font-size: 13px;
+                padding: 3px 5px;
+            }
+            
+            .language-selector {
+                padding: 3px 6px;
+                font-size: 11px;
+                min-width: 65px;
+            }
+            
+            .theme-toggle {
+                gap: 4px;
+            }
+            
+            .theme-toggle i {
+                font-size: 13px;
+            }
+
+            .page-header {
+                padding: 40px 15px 20px;
+            }
+            .page-header h1 {
+                font-size: 28px;
+            }
+            .page-header p {
+                font-size: 16px;
+                margin: 15px auto;
+            }
+
+            .services-list {
+                padding: 30px 15px;
+            }
+            .services-grid {
+                gap: 20px;
+            }
+            .service-item {
+                padding: 30px 15px;
+                border-radius: 15px;
+            }
+            .service-item i {
+                font-size: 50px;
+                margin-bottom: 15px;
+            }
+            .service-item h3 {
+                font-size: 22px;
+                margin-bottom: 10px;
+            }
+            .service-item p {
+                font-size: 14px;
+            }
+
+            .why-us {
+                padding: 50px 15px;
+            }
+            .why-us h2 {
+                font-size: 28px;
+                margin-bottom: 15px;
+            }
+            .why-us p {
+                font-size: 16px;
+            }
+
+            .footer {
+                padding: 30px 15px 15px;
+                margin-top: 30px;
+            }
+            .footer-container {
+                gap: 15px;
+            }
+            .footer-col h4 {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+            .footer-col p {
+                font-size: 13px;
+            }
+            .footer-bottom {
+                margin-top: 15px;
+                padding-top: 12px;
+                font-size: 12px;
+            }
+            .social-links a {
+                font-size: 18px;
+                margin-right: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo-container">
+            <img src="LOGO_.HTML-removebg-preview.png" alt="Logo principal" class="logo-img" onerror="this.style.display='none'">
+            <img src="LOGOISM.HTML.png" alt="Second logo" class="logo-img" onerror="this.style.display='none'">
+        </div>
+        
+        <div class="nav-links">
+            <a href="index.html" data-i18n="accueil">Accueil</a>
+            <a href="véhicules.html" data-i18n="vehicules">Véhicules</a>
+            <a href="services.html" class="active" data-i18n="services">Services</a>
+            <a href="contact.html" data-i18n="contact">Contact</a>
+            
+            <select class="language-selector" id="languageSelect">
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+                <option value="en">English</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="tr">Türkçe</option>
+                <option value="zh">中文</option>
+                <option value="ko">한국어</option>
+            </select>
+            
+            <div class="theme-toggle">
+                <i class="fas fa-moon" id="themeNight" title="Mode nuit"></i>
+                <i class="fas fa-sun" id="themeDay" title="Mode jour"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-header">
+        <h1 data-i18n="services_header1">Nos <span data-i18n="services_header2">Services</span></h1>
+        <p data-i18n="services_desc">Des services conçus pour votre confort et sécurité</p>
+    </div>
+
+    <section class="services-list">
+        <div class="services-grid">
+            <div class="service-item">
+                <i class="fas fa-car-side"></i>
+                <h3 data-i18n="service1_titre">Large gamme</h3>
+                <p data-i18n="service1_desc">Berlines, SUVs, 4x4, citadines... Choix varié pour tous les goûts.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-tags"></i>
+                <h3 data-i18n="service2_titre">Prix compétitifs</h3>
+                <p data-i18n="service2_desc">Meilleurs tarifs, sans surprise. Location adaptée à votre budget.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-shield-alt"></i>
+                <h3 data-i18n="service3_titre">Assurance incluse</h3>
+                <p data-i18n="service3_desc">Roulez en toute sérénité avec nos formules tout compris.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-clock"></i>
+                <h3 data-i18n="service4_titre">Disponibilité 24/7</h3>
+                <p data-i18n="service4_desc">Service client et assistance routière à tout moment.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-wifi"></i>
+                <h3 data-i18n="service5_titre">Connexion Wi-Fi</h3>
+                <p data-i18n="service5_desc">Restez connecté pendant vos trajets avec nos véhicules équipés.</p>
+            </div>
+            <div class="service-item">
+                <i class="fas fa-child"></i>
+                <h3 data-i18n="service6_titre">Siège bébé</h3>
+                <p data-i18n="service6_desc">Options de sécurité pour vos enfants disponibles sur demande.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="contact.html" class="btn-outline" data-i18n="reserver">Réserver maintenant</a>
+        </div>
+    </section>
+
+    <section class="why-us">
+        <h2 data-i18n="why_titre">Pourquoi choisir Golde Path Car ?</h2>
+        <p data-i18n="why_desc">Notre priorité est votre satisfaction. Avec des années d'expérience dans la location de véhicules, nous vous offrons un service fiable, transparent et adapté à vos besoins. Que ce soit pour un voyage d'affaires ou des vacances en famille, nous avons la voiture qu'il vous faut.</p>
+    </section>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h4 data-i18n="footer_horaires_titre">Horaires</h4>
+                <p data-i18n="footer_horaires_1"><i class="fas fa-clock"></i> Lun - Sam : 8h - 20h</p>
+                <p data-i18n="footer_horaires_2"><i class="fas fa-clock"></i> Dimanche : 9h - 18h</p>
+                <p data-i18n="footer_horaires_3"><i class="fas fa-clock"></i> Urgences 24/7</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_contact_titre">Contact</h4>
+                <p><i class="fas fa-phone-alt"></i> 0661661921 / 0661606607</p>
+                <p><i class="fas fa-envelope"></i> goldepathcar@gmail.com</p>
+                <p data-i18n="footer_adresse"><i class="fas fa-map-marker-alt"></i> Salé, Maroc</p>
+            </div>
+            <div class="footer-col">
+                <h4 data-i18n="footer_social_titre">Suivez-nous</h4>
+                <div class="social-links">
+                    <a href="https://wa.me/212661606607" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/goldepathcar?igsh=a3h1aGl0bGIxbmZy" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.tiktok.com/@location2026salae?_r=1&_t=ZS-94NlkeELAZx" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                    <a href="https://www.facebook.com/profile.php?id=61588065275877" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p data-i18n="footer_copyright">© 2016 GOLDE PATH CAR - Tous droits réservés</p>
+        </div>
+    </footer>
+
+    <script>
+        const translations = {
+            fr: {
+                services_titre: "Golde Path Car - Nos Services",
+                accueil: "Accueil",
+                vehicules: "Véhicules",
+                services: "Services",
+                contact: "Contact",
+                services_header1: "Nos ",
+                services_header2: "Services",
+                services_desc: "Des services conçus pour votre confort et sécurité",
+                service1_titre: "Large gamme",
+                service1_desc: "Berlines, SUVs, 4x4, citadines... Choix varié pour tous les goûts.",
+                service2_titre: "Prix compétitifs",
+                service2_desc: "Meilleurs tarifs, sans surprise. Location adaptée à votre budget.",
+                service3_titre: "Assurance incluse",
+                service3_desc: "Roulez en toute sérénité avec nos formules tout compris.",
+                service4_titre: "Disponibilité 24/7",
+                service4_desc: "Service client et assistance routière à tout moment.",
+                service5_titre: "Connexion Wi-Fi",
+                service5_desc: "Restez connecté pendant vos trajets avec nos véhicules équipés.",
+                service6_titre: "Siège bébé",
+                service6_desc: "Options de sécurité pour vos enfants disponibles sur demande.",
+                reserver: "Réserver maintenant",
+                why_titre: "Pourquoi choisir Golde Path Car ?",
+                why_desc: "Notre priorité est votre satisfaction. Avec des années d'expérience dans la location de véhicules, nous vous offrons un service fiable, transparent et adapté à vos besoins. Que ce soit pour un voyage d'affaires ou des vacances en famille, nous avons la voiture qu'il vous faut.",
+                footer_horaires_titre: "Horaires",
+                footer_horaires_1: "Lun - Sam : 8h - 20h",
+                footer_horaires_2: "Dimanche : 9h - 18h",
+                footer_horaires_3: "Urgences 24/7",
+                footer_contact_titre: "Contact",
+                footer_adresse: "Salé, Maroc",
+                footer_social_titre: "Suivez-nous",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Tous droits réservés"
+            },
+            ar: {
+                services_titre: "جولدي باث كار - خدماتنا",
+                accueil: "الرئيسية",
+                vehicules: "المركبات",
+                services: "الخدمات",
+                contact: "اتصل بنا",
+                services_header1: "خدمات",
+                services_header2: "نا",
+                services_desc: "خدمات مصممة لراحتك وسلامتك",
+                service1_titre: "تشكيلة واسعة",
+                service1_desc: "سيارات سيدان، دفع رباعي، عائلية... اختيار متنوع يناسب جميع الأذواق.",
+                service2_titre: "أسعار تنافسية",
+                service2_desc: "أفضل الأسعار بدون مفاجآت. إيجار يناسب ميزانيتك.",
+                service3_titre: "تأمين شامل",
+                service3_desc: "قد بكل أمان مع باقاتنا المتكاملة.",
+                service4_titre: "متاح 24/7",
+                service4_desc: "خدمة العملاء والمساعدة على الطريق في أي وقت.",
+                service5_titre: "اتصال واي فاي",
+                service5_desc: "ابق متصلاً أثناء رحلاتك مع سياراتنا المجهزة.",
+                service6_titre: "مقعد أطفال",
+                service6_desc: "خيارات أمان لأطفالك متوفرة عند الطلب.",
+                reserver: "احجز الآن",
+                why_titre: "لماذا تختار جولدي باث كار؟",
+                why_desc: "أولويتنا هي رضاك. مع سنوات من الخبرة في تأجير السيارات، نقدم لك خدمة موثوقة وشفافة ومصممة خصيصاً لاحتياجاتك. سواء كانت رحلة عمل أو عطلة عائلية، لدينا السيارة المناسبة لك.",
+                footer_horaires_titre: "ساعات العمل",
+                footer_horaires_1: "الاثنين - السبت: ٨ صباحاً - ٨ مساءً",
+                footer_horaires_2: "الأحد: ٩ صباحاً - ٦ مساءً",
+                footer_horaires_3: "الطوارئ 24/7",
+                footer_contact_titre: "الاتصال",
+                footer_adresse: "سلا، المغرب",
+                footer_social_titre: "تابعنا",
+                footer_copyright: "© 2016 جولدي باث كار - جميع الحقوق محفوظة"
+            },
+            en: {
+                services_titre: "Golde Path Car - Our Services",
+                accueil: "Home",
+                vehicules: "Vehicles",
+                services: "Services",
+                contact: "Contact",
+                services_header1: "Our ",
+                services_header2: "Services",
+                services_desc: "Services designed for your comfort and safety",
+                service1_titre: "Wide range",
+                service1_desc: "Sedans, SUVs, 4x4s, city cars... Varied choice for all tastes.",
+                service2_titre: "Competitive Pricing",
+                service2_desc: "Best rates, no surprises. Rental adapted to your budget.",
+                service3_titre: "Insurance included",
+                service3_desc: "Drive with peace of mind with our all-inclusive packages.",
+                service4_titre: "24/7 availability",
+                service4_desc: "Customer service and roadside assistance at all times.",
+                service5_titre: "Wi-Fi connection",
+                service5_desc: "Stay connected during your trips with our equipped vehicles.",
+                service6_titre: "Baby seat",
+                service6_desc: "Safety options for your children available on request.",
+                reserver: "Book now",
+                why_titre: "Why choose Golde Path Car?",
+                why_desc: "Our priority is your satisfaction. With years of experience in vehicle rental, we offer you a reliable, transparent service tailored to your needs. Whether it's for a business trip or a family holiday, we have the right car for you.",
+                footer_horaires_titre: "Opening hours",
+                footer_horaires_1: "Mon - Sat: 8am - 8pm",
+                footer_horaires_2: "Sunday: 9am - 6pm",
+                footer_horaires_3: "24/7 emergencies",
+                footer_contact_titre: "Contact",
+                footer_adresse: "Salé, Morocco",
+                footer_social_titre: "Follow us",
+                footer_copyright: "© 2016 GOLDE PATH CAR - All rights reserved"
+            },
+            es: {
+                services_titre: "Golde Path Car - Nuestros Servicios",
+                accueil: "Inicio",
+                vehicules: "Vehículos",
+                services: "Servicios",
+                contact: "Contacto",
+                services_header1: "Nuestros ",
+                services_header2: "Servicios",
+                services_desc: "Servicios diseñados para su comodidad y seguridad",
+                service1_titre: "Amplia gama",
+                service1_desc: "Sedanes, SUVs, 4x4, urbanos... Variada elección para todos los gustos.",
+                service2_titre: "Precios competitivos",
+                service2_desc: "Mejores tarifas, sin sorpresas. Alquiler adaptado a su presupuesto.",
+                service3_titre: "Seguro incluido",
+                service3_desc: "Conduzca con tranquilidad con nuestros paquetes todo incluido.",
+                service4_titre: "Disponibilidad 24/7",
+                service4_desc: "Servicio al cliente y asistencia en carretera en todo momento.",
+                service5_titre: "Conexión Wi-Fi",
+                service5_desc: "Manténgase conectado durante sus viajes con nuestros vehículos equipados.",
+                service6_titre: "Silla de bebé",
+                service6_desc: "Opciones de seguridad para sus niños disponibles bajo petición.",
+                reserver: "Reservar ahora",
+                why_titre: "¿Por qué elegir Golde Path Car?",
+                why_desc: "Nuestra prioridad es su satisfacción. Con años de experiencia en alquiler de vehículos, le ofrecemos un servicio fiable, transparente y adaptado a sus necesidades. Ya sea para un viaje de negocios o unas vacaciones familiares, tenemos el coche que necesita.",
+                footer_horaires_titre: "Horarios",
+                footer_horaires_1: "Lun - Sáb : 8h - 20h",
+                footer_horaires_2: "Domingo : 9h - 18h",
+                footer_horaires_3: "Emergencias 24/7",
+                footer_contact_titre: "Contacto",
+                footer_adresse: "Salé, Marruecos",
+                footer_social_titre: "Síguenos",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Todos los derechos reservados"
+            },
+            de: {
+                services_titre: "Golde Path Car - Unsere Dienstleistungen",
+                accueil: "Startseite",
+                vehicules: "Fahrzeuge",
+                services: "Dienstleistungen",
+                contact: "Kontakt",
+                services_header1: "Unsere ",
+                services_header2: "Dienstleistungen",
+                services_desc: "Dienstleistungen für Ihren Komfort und Ihre Sicherheit",
+                service1_titre: "Große Auswahl",
+                service1_desc: "Limousinen, SUVs, Geländewagen, Stadtautos... Vielfältige Auswahl für jeden Geschmack.",
+                service2_titre: "Wettbewerbsfähige Preise",
+                service2_desc: "Beste Preise, keine Überraschungen. Miete, die an Ihr Budget angepasst ist.",
+                service3_titre: "Versicherung inklusive",
+                service3_desc: "Fahren Sie sorgenfrei mit unseren All-inclusive-Paketen.",
+                service4_titre: "24/7 Verfügbarkeit",
+                service4_desc: "Kundenservice und Pannenhilfe jederzeit.",
+                service5_titre: "Wi-Fi Verbindung",
+                service5_desc: "Bleiben Sie während Ihrer Fahrten mit unseren ausgestatteten Fahrzeugen verbunden.",
+                service6_titre: "Kindersitz",
+                service6_desc: "Sicherheitsoptionen für Ihre Kinder auf Anfrage verfügbar.",
+                reserver: "Jetzt buchen",
+                why_titre: "Warum Golde Path Car wählen?",
+                why_desc: "Unsere Priorität ist Ihre Zufriedenheit. Mit jahrelanger Erfahrung in der Fahrzeugvermietung bieten wir Ihnen einen zuverlässigen, transparenten Service, der auf Ihre Bedürfnisse zugeschnitten ist. Ob für eine Geschäftsreise oder einen Familienurlaub, wir haben das richtige Auto für Sie.",
+                footer_horaires_titre: "Öffnungszeiten",
+                footer_horaires_1: "Mo - Sa: 8 - 20 Uhr",
+                footer_horaires_2: "Sonntag: 9 - 18 Uhr",
+                footer_horaires_3: "Notfälle 24/7",
+                footer_contact_titre: "Kontakt",
+                footer_adresse: "Salé, Marokko",
+                footer_social_titre: "Folgen Sie uns",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Alle Rechte vorbehalten"
+            },
+            tr: {
+                services_titre: "Golde Path Car - Hizmetlerimiz",
+                accueil: "Ana Sayfa",
+                vehicules: "Araçlar",
+                services: "Hizmetler",
+                contact: "İletişim",
+                services_header1: "Hizmet",
+                services_header2: "lerimiz",
+                services_desc: "Konforunuz ve güvenliğiniz için tasarlanmış hizmetler",
+                service1_titre: "Geniş seçenek",
+                service1_desc: "Sedanlar, SUV'lar, 4x4'ler, şehir arabaları... Her zevke uygun çeşitli seçim.",
+                service2_titre: "Rekabetçi fiyatlar",
+                service2_desc: "En iyi fiyatlar, sürpriz yok. Bütçenize uygun kiralama.",
+                service3_titre: "Sigorta dahil",
+                service3_desc: "Her şey dahil paketlerimizle gönül rahatlığıyla sürüş.",
+                service4_titre: "7/24 ulaşılabilirlik",
+                service4_desc: "Her zaman müşteri hizmetleri ve yol yardımı.",
+                service5_titre: "Wi-Fi bağlantısı",
+                service5_desc: "Donanımlı araçlarımızla seyahatlerinizde bağlantıda kalın.",
+                service6_titre: "Bebek koltuğu",
+                service6_desc: "Çocuklarınız için güvenlik seçenekleri istek üzerine mevcuttur.",
+                reserver: "Şimdi rezervasyon yap",
+                why_titre: "Neden Golde Path Car?",
+                why_desc: "Önceliğimiz memnuniyetinizdir. Yılların araç kiralama deneyimiyle size ihtiyaçlarınıza göre güvenilir, şeffaf bir hizmet sunuyoruz. İster iş seyahati ister aile tatili için olsun, size uygun aracımız var.",
+                footer_horaires_titre: "Çalışma saatleri",
+                footer_horaires_1: "Pts - Cmt: 8:00 - 20:00",
+                footer_horaires_2: "Pazar: 9:00 - 18:00",
+                footer_horaires_3: "7/24 Acil durumlar",
+                footer_contact_titre: "İletişim",
+                footer_adresse: "Salé, Fas",
+                footer_social_titre: "Bizi takip edin",
+                footer_copyright: "© 2016 GOLDE PATH CAR - Tüm hakları saklıdır"
+            },
+            zh: {
+                services_titre: "Golde Path Car - 我们的服务",
+                accueil: "首页",
+                vehicules: "车辆",
+                services: "服务",
+                contact: "联系我们",
+                services_header1: "我们的",
+                services_header2: "服务",
+                services_desc: "为您的舒适和安全设计的服务",
+                service1_titre: "广泛选择",
+                service1_desc: "轿车、SUV、四驱、城市车... 适合各种口味的多样化选择。",
+                service2_titre: "有竞争力的价格",
+                service2_desc: "最优惠的价格，无 surprises。适合您预算的租赁。",
+                service3_titre: "包含保险",
+                service3_desc: "使用我们的全包套餐，安心驾驶。",
+                service4_titre: "24/7 可用性",
+                service4_desc: "随时提供客户服务和道路救援。",
+                service5_titre: "Wi-Fi 连接",
+                service5_desc: "使用我们配备的车辆在旅途中保持连接。",
+                service6_titre: "婴儿座椅",
+                service6_desc: "可根据要求提供儿童安全选项。",
+                reserver: "立即预订",
+                why_titre: "为什么选择 Golde Path Car？",
+                why_desc: "我们的首要任务是您的满意。凭借多年的车辆租赁经验，我们为您提供可靠、透明且适合您需求的服务。无论是商务旅行还是家庭度假，我们都有适合您的汽车。",
+                footer_horaires_titre: "营业时间",
+                footer_horaires_1: "周一至周六：8:00 - 20:00",
+                footer_horaires_2: "周日：9:00 - 18:00",
+                footer_horaires_3: "24/7 紧急情况",
+                footer_contact_titre: "联系方式",
+                footer_adresse: "塞拉, 摩洛哥",
+                footer_social_titre: "关注我们",
+                footer_copyright: "© 2016 GOLDE PATH CAR - 保留所有权利"
+            },
+            ko: {
+                services_titre: "Golde Path Car - 서비스",
+                accueil: "홈",
+                vehicules: "차량",
+                services: "서비스",
+                contact: "연락처",
+                services_header1: "우리의 ",
+                services_header2: "서비스",
+                services_desc: "귀하의 편안함과 안전을 위해 설계된 서비스",
+                service1_titre: "다양한 선택",
+                service1_desc: "세단, SUV, 4x4, 시티카... 모든 취향에 맞는 다양한 선택.",
+                service2_titre: "경쟁력 있는 가격",
+                service2_desc: "최고의 요금, 놀라움 없음. 예산에 맞는 렌탈.",
+                service3_titre: "보험 포함",
+                service3_desc: "모든 것이 포함된 패키지로 안심하고 운전하세요.",
+                service4_titre: "24/7 이용 가능",
+                service4_desc: "항상 고객 서비스 및 긴급 출동 서비스.",
+                service5_titre: "Wi-Fi 연결",
+                service5_desc: "장비를 갖춘 차량으로 여행 중에도 연결 상태를 유지하세요.",
+                service6_titre: "유아용 시트",
+                service6_desc: "요청 시 자녀를 위한 안전 옵션을 이용할 수 있습니다.",
+                reserver: "지금 예약",
+                why_titre: "왜 Golde Path Car를 선택해야 할까요?",
+                why_desc: "우리의 최우선 사항은 귀하의 만족입니다. 수년간의 차량 렌탈 경험을 바탕으로 귀하의 필요에 맞는 신뢰할 수 있고 투명한 서비스를 제공합니다. 출장이든 가족 휴가든 귀하에게 맞는 차량이 있습니다.",
+                footer_horaires_titre: "영업 시간",
+                footer_horaires_1: "월 - 토: 8:00 - 20:00",
+                footer_horaires_2: "일요일: 9:00 - 18:00",
+                footer_horaires_3: "24/7 긴급 상황",
+                footer_contact_titre: "연락처",
+                footer_adresse: "살레, 모로코",
+                footer_social_titre: "팔로우하기",
+                footer_copyright: "© 2016 GOLDE PATH CAR - 모든 권리 보유"
+            }
+        };
+
+        function applyLanguage(lang) {
+            if (!translations[lang]) return;
+
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    const icon = el.querySelector('i');
+                    if (icon) {
+                        el.innerHTML = icon.outerHTML + ' ' + translations[lang][key];
+                    } else {
+                        el.innerHTML = translations[lang][key];
+                    }
+                }
+            });
+
+            if (lang === 'ar') {
+                document.documentElement.setAttribute('dir', 'rtl');
+            } else {
+                document.documentElement.setAttribute('dir', 'ltr');
+            }
+            document.documentElement.lang = lang;
+        }
+
+        const savedLang = localStorage.getItem('preferredLang') || 'fr';
+        const selector = document.getElementById('languageSelect');
+        if (selector) {
+            selector.value = savedLang;
+            selector.addEventListener('change', (e) => {
+                const newLang = e.target.value;
+                localStorage.setItem('preferredLang', newLang);
+                applyLanguage(newLang);
+            });
+        }
+        applyLanguage(savedLang);
+
+        const body = document.body;
+        const themeNight = document.getElementById('themeNight');
+        const themeDay = document.getElementById('themeDay');
+
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        if (savedTheme === 'light') {
+            body.classList.add('theme-light');
+        } else {
+            body.classList.remove('theme-light');
+        }
+
+        if (themeNight && themeDay) {
+            themeNight.addEventListener('click', () => {
+                body.classList.remove('theme-light');
+                localStorage.setItem('theme', 'dark');
+            });
+
+            themeDay.addEventListener('click', () => {
+                body.classList.add('theme-light');
+                localStorage.setItem('theme', 'light');
+            });
+        }
+    </script>
+</body>
+</html>
